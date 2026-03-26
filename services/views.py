@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.db import IntegrityError
 from django.contrib.auth import logout, login, authenticate
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
 from .models import User, Service, ProviderProfile, Booking
 
@@ -10,6 +11,23 @@ from .models import User, Service, ProviderProfile, Booking
 
 def index(request):
     return render(request, "services/index.html")
+
+
+@login_required
+def become_provider(request):
+    if request.method == "POST":
+        description = request.POST.get("description")
+
+        if ProviderProfile.objects.filter(user = request.user).exists():
+            return render(request, "services/become_provider.html", {
+                "message": "Provider profile already exists"
+            })
+        provider = ProviderProfile.objects.create(user = request.user, description = description)
+        provider.save()
+        return HttpResponseRedirect(reverse("index"))
+    return render(request, "services/become_provider.html")
+
+
 
 
 def register(request):
