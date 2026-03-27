@@ -1,0 +1,19 @@
+ {% extends "services/layout.html" %}
+
+{% block title %}{{service.name}}{% endblock %}
+{% block content %} 
+    <div class= "card detail-card mb-3">
+        <div class="card-body">
+            <h1 class="card-title">{{service.name}}</h1>
+            <hr>
+            <p class="card-text">{{service.description}}</p>
+            <h4 class="card-text">@{{service.provider.user.username}}</h4>
+            <h3 class="card-text"><strong>${{service.price}} </strong></h3>
+
+        </div>
+        <div>
+            <button class="btn btn-secondary button" onclick="window.history.back()">Back</button>
+            <button class="btn btn-primary button">Book</button>
+        </div>
+    </div>
+{% endblock %}

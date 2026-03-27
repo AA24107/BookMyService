@@ -1,3 +1,14 @@
+.detail-card {
+    align-items: center;
+    justify-content: center; 
+}
+
+
+.button {
+    padding: 5px;
+    background-color: black;
+    color: white;
+}
 
 
 .card {

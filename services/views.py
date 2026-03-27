@@ -11,14 +11,16 @@ from .models import User, Service, ProviderProfile, Booking
 
 
 def index(request):
-
     services = Service.objects.all()
-
     return render(request, "services/index.html", {
         "services": services
     })
 
-
+def detail(request, service_id):
+    service = Service.objects.get(id = service_id)
+    return render(request, "services/detail.html", {
+        "service": service
+    })
 
 @login_required
 def become_provider(request):
