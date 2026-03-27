@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.db import IntegrityError
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
 from .models import User, Service, ProviderProfile, Booking
 
@@ -24,10 +25,30 @@ def become_provider(request):
             })
         provider = ProviderProfile.objects.create(user = request.user, description = description)
         provider.save()
+        messages.success(request, "You are a provider now !!")
         return HttpResponseRedirect(reverse("index"))
     return render(request, "services/become_provider.html")
 
 
+@login_required
+def create_service(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        description = request.POST.get("description")
+        price = request.POST.get("price")
+        provider = ProviderProfile.objects.get(user = request.user)
+        if not name or not description or not price:
+            return render(request, "services/create_service.html", {
+                "message": "All fields are required"
+            })
+        if not provider:
+                messages.error(request, "You are not a provider")
+                return HttpResponseRedirect(reverse("index"))
+        service = Service.objects.create(name = name, description = description, price = price, provider = provider)
+        service.save()
+        messages.success(request, "Service created successfully")
+        return HttpResponseRedirect(reverse("index"))
+    return render(request, "services/create_service.html")
 
 
 def register(request):
@@ -52,6 +73,7 @@ def register(request):
                 "message": "username is taken"
             })
         login(request, user)
+        messages.success(request, "Account created successfully")
         return HttpResponseRedirect(reverse("index"))
     return render(request, "services/register.html")
 
