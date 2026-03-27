@@ -2,13 +2,16 @@
 
 {% block title %}Home Page{% endblock %}
 {% block content %} 
-    
+    <hr>
+    <div class="search">
+        <input name="search" id="search-bar" placeholder="Search">
+    </div>
     <hr>
     {% if services %}
     <div class="container-fluid" id="service-container">
         <!--Service Cards-->
             {% for service in services %}
-                <div class= "card service-cards mb-3">
+                <div class= "card service-card mb-3" data-id="{{service.id}}">
                     <div>
                         <h5 class="card-title">{{service.name}}</h5>
                         <hr>

@@ -16,6 +16,7 @@ def index(request):
         "services": services
     })
 
+@login_required
 def detail(request, service_id):
     service = Service.objects.get(id = service_id)
     return render(request, "services/detail.html", {

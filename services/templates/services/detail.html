@@ -2,12 +2,13 @@
 
 {% block title %}{{service.name}}{% endblock %}
 {% block content %} 
-    <div class= "card detail-card mb-3">
+    <hr>
+    <div class= "card mb-3 detail-card">
         <div class="card-body">
             <h1 class="card-title">{{service.name}}</h1>
             <hr>
             <p class="card-text">{{service.description}}</p>
-            <h4 class="card-text">@{{service.provider.user.username}}</h4>
+            <h4 class="card-text"><strong>@{{service.provider.user.username}}</strong></h4>
             <h3 class="card-text"><strong>${{service.price}} </strong></h3>
 
         </div>
