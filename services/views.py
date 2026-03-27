@@ -11,7 +11,13 @@ from .models import User, Service, ProviderProfile, Booking
 
 
 def index(request):
-    return render(request, "services/index.html")
+
+    services = Service.objects.all()
+
+    return render(request, "services/index.html", {
+        "services": services
+    })
+
 
 
 @login_required
