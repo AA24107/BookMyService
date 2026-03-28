@@ -17,7 +17,10 @@
             {% if service.provider.user.username == request.user.username %}
                 <button class="btn btn-primary button">Edit</button>
             {% else %}
-                <button class="button">Book</button>
+                <form method="POST", action="{% url 'book_service' service.id %}">
+                    {% csrf_token %}
+                    <button class="button" type="submit" >Book</button>
+                </form>
             {% endif %}
         </div>
     </div>

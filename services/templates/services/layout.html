@@ -34,10 +34,13 @@
             </div>
         </nav>
         <div class="container-fluid mb-3">
-            {% if message %}
-                <div class="container-flex">
+            {% if messages %}
+            <hr>
+                {% for message in messages %}
+                <div class="container-flex alert alert-info">
                     {{message}}
                 </div>
+                {% endfor %}
             {% endif %}
             {% block content %} {% endblock %}
         </div>

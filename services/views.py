@@ -16,16 +16,42 @@ def index(request):
         "services": services
     })
 
-
+@login_required
 def dashboard(request, username):
     user = User.objects.get(username=username)
     provider = ProviderProfile.objects.filter(user=request.user).first()
     services = Service.objects.filter(provider = provider)
+    requests = None
+    bookings = None
+    if provider:
+        requests = Booking.objects.filter(provider= provider)
+    else:
+        bookings = Booking.objects.filter(user=request.user)
     return render(request, "services/dashboard.html", {
         "user": user,
         "provider": provider,
         "services": services,
+        "bookings": bookings,
+        "requests": requests
     })
+
+
+@login_required
+def book_service(request, service_id):
+    service = Service.objects.get(id=service_id)
+
+    if Booking.objects.filter(user=request.user, service=service).exists():
+        messages.error(request, "Already booked")
+        return redirect("dashboard", username= request.user.username)
+
+    booking = Booking.objects.create(
+        user= request.user,
+        provider = service.provider,
+        service = service,
+    )
+    booking.save()
+
+    return redirect("dashboard", username= request.user.username)
 
 
 @login_required

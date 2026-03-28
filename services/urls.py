@@ -10,5 +10,6 @@ urlpatterns = [
     path("become-provider", views.become_provider, name="become_provider"),
     path("create-service", views.create_service, name="create_service"),
     path("service/<int:service_id>", views.detail, name="detail"),
-    path("dashboard/<str:username>", views.dashboard, name="dashboard")
+    path("dashboard/<str:username>", views.dashboard, name="dashboard"),
+    path("book/<int:service_id>", views.book_service, name="book_service")
 ]

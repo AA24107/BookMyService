@@ -4,13 +4,23 @@
 {% block content %} 
     <hr>
     <div class="card mb-3 dashboard" id="user-view">
-        <h1 class="card-title">@{{user.username}}'s Dasboard</h1>
+        <h1 class="card-title">@{{user.username}}'s Dashboard</h1>
         <hr>
         {% if not provider %}
         <div class="card-body">
             <h3>Bookings</h3>
             {% for booking in bookings %}
-            <!--Bookings-->
+            <div class= "card mb-3"">
+                <div>
+                    <h5 class="card-title">{{booking.name}}</h5>
+                    <hr>
+                    <h5 class="card-text">{{booking.service.name}}</h5>
+                    <p class="card-text">{{booking.service.description}}</p>
+                    <p class="card-text">Requested By: <strong>{{booking.user.username}}</strong></p>
+                    <p class="card-text">Provided By: <strong>{{booking.provider.user.username}}</strong></p>
+                    <p class="card-text"><strong>{{booking.status}} </strong></p>
+                </div>
+            </div>
             {% endfor %}
         </div>
         <br>
@@ -23,7 +33,17 @@
         <div class="card-body">
             <h3>Requests</h3>
             {% for request in requests %}
-            <!--Requests-->
+            <div class= "card mb-3"">
+                <div>
+                    <h5 class="card-title">{{request.name}}</h5>
+                    <hr>
+                    <h5 class="card-text">{{request.service.name}}</h5>
+                    <p class="card-text">{{request.service.description}}</p>
+                    <p class="card-text">Requested By: <strong>{{request.user.username}}</strong></p>
+                    <p class="card-text">Provided By: <strong>{{request.provider.user.username}}</strong></p>
+                    <p class="card-text"><strong>{{request.status}} </strong></p>
+                </div>
+            </div>
             {% endfor %}
         </div>
         <br>
@@ -36,7 +56,7 @@
                         <h5 class="card-title">{{service.name}}</h5>
                         <hr>
                         <p class="card-text">{{service.description}}</p>
-                        <p class="card-text">@{{service.provider.user.username}}</p>
+                        <p class="card-text">Provided By: <strong>{{service.provider.user.username}}</strong></p>
                         <p class="card-text"><strong>${{service.price}} </strong></p>
                     </div>
                 </div>
