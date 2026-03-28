@@ -1,0 +1,54 @@
+ {% extends "services/layout.html" %}
+
+{% block title %}{{user.username}}{% endblock %}
+{% block content %} 
+    <hr>
+    <div class="card mb-3 dashboard" id="user-view">
+        <h1 class="card-title">@{{user.username}}'s Dasboard</h1>
+        <hr>
+        {% if not provider %}
+        <div class="card-body">
+            <h3>Bookings</h3>
+            {% for booking in bookings %}
+            <!--Bookings-->
+            {% endfor %}
+        </div>
+        <br>
+        <div class="card-body">
+            <button class="button" onclick="window.location.href=`{% url 'become_provider' %}`">
+                Become a Service Provider
+            </button>
+        </div>
+        {% else %}
+        <div class="card-body">
+            <h3>Requests</h3>
+            {% for request in requests %}
+            <!--Requests-->
+            {% endfor %}
+        </div>
+        <br>
+        <div class="card-body">
+            <h3>Services</h3>
+            {% for service in services %}
+            <div>
+                <div class= "card service-card mb-3" data-id="{{service.id}}">
+                    <div>
+                        <h5 class="card-title">{{service.name}}</h5>
+                        <hr>
+                        <p class="card-text">{{service.description}}</p>
+                        <p class="card-text">@{{service.provider.user.username}}</p>
+                        <p class="card-text"><strong>${{service.price}} </strong></p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <br>
+        <div class="card-body">
+            <button class="button" onclick="window.location.href=`{% url 'create_service' %}`">
+                Create a service
+            </button>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

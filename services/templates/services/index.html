@@ -18,14 +18,13 @@
                         <p class="card-text">{{service.description}}</p>
                         <p class="card-text">@{{service.provider.user.username}}</p>
                         <p class="card-text"><strong>${{service.price}} </strong></p>
-
                     </div>
                 </div>
             {% endfor %}
     </div>
     {% else %}
         <div>
-            <h3>No Services Available</h3>
+            <h3>No Services Found</h3>
         </div>
     {% endif %}
 {% endblock %}

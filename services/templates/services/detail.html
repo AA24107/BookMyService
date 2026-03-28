@@ -14,7 +14,11 @@
         </div>
         <div>
             <button class="btn btn-secondary button" onclick="window.history.back()">Back</button>
-            <button class="btn btn-primary button">Book</button>
+            {% if service.provider.user.username == request.user.username %}
+                <button class="btn btn-primary button">Edit</button>
+            {% else %}
+                <button class="button">Book</button>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

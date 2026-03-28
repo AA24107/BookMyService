@@ -16,6 +16,18 @@ def index(request):
         "services": services
     })
 
+
+def dashboard(request, username):
+    user = User.objects.get(username=username)
+    provider = ProviderProfile.objects.filter(user=request.user).first()
+    services = Service.objects.filter(provider = provider)
+    return render(request, "services/dashboard.html", {
+        "user": user,
+        "provider": provider,
+        "services": services,
+    })
+
+
 @login_required
 def detail(request, service_id):
     service = Service.objects.get(id = service_id)
@@ -36,7 +48,10 @@ def become_provider(request):
         provider.save()
         messages.success(request, "You are a provider now !!")
         return HttpResponseRedirect(reverse("index"))
-    return render(request, "services/become_provider.html")
+    user = User.objects.get(username = request.user.username)
+    return render(request, "services/become_provider.html", {
+        "user": user
+    })
 
 
 @login_required
@@ -62,10 +77,10 @@ def create_service(request):
 
 def register(request):
     if request.method == "POST":
-        username = request.POST.get["username"]
-        password = request.POST.get["password"]
-        email = request.POST.get["email"]
-        confirmation = request.POST.get["confirm"]
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        email = request.POST.get("email")
+        confirmation = request.POST.get("confirm")
 
         if not username or not email or not password or not confirmation:
             return render(request, "services/register.html", {

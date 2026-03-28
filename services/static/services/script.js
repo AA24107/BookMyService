@@ -1,14 +1,17 @@
 const searchInput = document.getElementById("search-bar");
 const cards = document.querySelectorAll(".service-card");
 
-searchInput.addEventListener("input", filterCards);
+if (searchInput) {
+    searchInput.addEventListener("input", filterCards);
+}
 
+console.log("Js working");
 
 cards.forEach(card => {
     const id = card.dataset.id;
 
     card.addEventListener("click", () => {
-        window.location.href = `service/${id}`
+        window.location.href = `/service/${id}`
     })
 })
 

@@ -6,14 +6,16 @@
 <br>
 <div class="card">
     <div class="container-fluid ">
-        <h1>Login</h1>
+        <h1>Become a Provider</h1>
+        <hr>
+        <h3>Username: @{{user.username}}</h3>
         <form class="card-body" action="{% url 'become_provider' %}" method="post">
             {% csrf_token %}
             <div class="form-group">
                 <input  class="form-control" autofocus type="text" name="description" placeholder="Description">
             </div>
             <div class="form-group">
-                <input  class="btn btn-primary" type="submit" value="Login">
+                <input  class="btn btn-primary" type="submit" value="Become a Provider">
             </div>
         </form>
     </div>
