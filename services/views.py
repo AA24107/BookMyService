@@ -21,10 +21,9 @@ def dashboard(request, username):
     user = User.objects.get(username=username)
     provider = ProviderProfile.objects.filter(user=request.user).first()
     services = Service.objects.filter(provider = provider)
-    requests = None
     bookings = None
     if provider:
-        requests = Booking.objects.filter(provider= provider)
+        bookings = Booking.objects.filter(provider= provider)
     else:
         bookings = Booking.objects.filter(user=request.user)
     return render(request, "services/dashboard.html", {
@@ -32,7 +31,6 @@ def dashboard(request, username):
         "provider": provider,
         "services": services,
         "bookings": bookings,
-        "requests": requests
     })
 
 
@@ -51,6 +49,25 @@ def book_service(request, service_id):
     )
     booking.save()
 
+    return redirect("dashboard", username= request.user.username)
+
+
+@login_required
+def status_update(request, booking_id):
+    booking = Booking.objects.get(id=booking_id)
+    
+    if request.user != booking.provider.user:
+        return redirect("dashboard", username= request.user.username)
+    
+    if request.method == "POST":
+        booking = Booking.objects.get(id=booking_id)
+        if 'accept' in request.POST:
+            booking.status = "accepted"
+            booking.save()
+        elif 'reject' in request.POST:
+            booking.status = "rejected"
+            booking.save()    
+    
     return redirect("dashboard", username= request.user.username)
 
 

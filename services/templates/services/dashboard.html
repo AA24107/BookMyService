@@ -3,7 +3,7 @@
 {% block title %}{{user.username}}{% endblock %}
 {% block content %} 
     <hr>
-    <div class="card mb-3 dashboard" id="user-view">
+    <div class="card mb-3 dashboard">
         <h1 class="card-title">@{{user.username}}'s Dashboard</h1>
         <hr>
         {% if not provider %}
@@ -18,7 +18,15 @@
                     <p class="card-text">{{booking.service.description}}</p>
                     <p class="card-text">Requested By: <strong>{{booking.user.username}}</strong></p>
                     <p class="card-text">Provided By: <strong>{{booking.provider.user.username}}</strong></p>
-                    <p class="card-text"><strong>{{booking.status}} </strong></p>
+                    {% if booking.status == 'pending'%}
+                        <h4 style="color: yellowgreen;"><strong>Pending</strong></h4>
+                    {% elif booking.status == "accepted" %}
+                        <h4 style="color: green;"><strong>Accepted</strong></h4>
+                    {% elif booking.status == "rejected" %}
+                        <h4 style="color: red;"><strong>Rejected</strong></h4>
+                    {% else %}
+                        <h4 class="card-text"><strong>{{request.status}} </strong></h4>
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}
@@ -32,16 +40,28 @@
         {% else %}
         <div class="card-body">
             <h3>Requests</h3>
-            {% for request in requests %}
-            <div class= "card mb-3"">
+            {% for booking in bookings %}
+            <div class= "card mb-3">
+                <h5 class="card-title">{{booking.name}}</h5>
+                <hr>
+                <h5 class="card-text">{{booking.service.name}}</h5>
+                <p class="card-text">{{booking.service.description}}</p>
+                <p class="card-text">Requested By: <strong>{{booking.user.username}}</strong></p>
+                <p class="card-text">Provided By: <strong>{{booking.provider.user.username}}</strong></p>
                 <div>
-                    <h5 class="card-title">{{request.name}}</h5>
-                    <hr>
-                    <h5 class="card-text">{{request.service.name}}</h5>
-                    <p class="card-text">{{request.service.description}}</p>
-                    <p class="card-text">Requested By: <strong>{{request.user.username}}</strong></p>
-                    <p class="card-text">Provided By: <strong>{{request.provider.user.username}}</strong></p>
-                    <p class="card-text"><strong>{{request.status}} </strong></p>
+                    {% if booking.status == 'pending' %}
+                    <form method="POST" action="{% url 'status_update' booking.id %}">
+                        {% csrf_token %}
+                        <button class="button" type="submit" name="accept" style="background-color: green; margin-right: 10px;">Accept</button>
+                        <button class="button" type="submit" name="reject" style="background-color: red; margin-right: 10px;">Reject</button>
+                    </form>
+                    {% elif booking.status == "accepted" %}
+                        <h4 style="color: green;"><strong>Accepted</strong></h4>
+                    {% elif booking.status == "rejected" %}
+                        <h4 style="color: red;"><strong>Rejected</strong></h4>
+                    {% else %}
+                        <h4 class="card-text"><strong>{{request.status}} </strong></h4>
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}
