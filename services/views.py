@@ -53,6 +53,19 @@ def book_service(request, service_id):
 
 
 @login_required
+def delete_service(request, service_id):
+    service = Service.objects.get(id=service_id)
+
+    if service.provider.user != request.user:
+        return redirect("dashboard", username= request.user.username)
+    
+    if request.method == "POST":
+        service.delete()   
+
+    return redirect("dashboard", username= request.user.username)
+
+
+@login_required
 def status_update(request, booking_id):
     booking = Booking.objects.get(id=booking_id)
     

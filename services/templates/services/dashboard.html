@@ -78,6 +78,14 @@
                         <p class="card-text">{{service.description}}</p>
                         <p class="card-text">Provided By: <strong>{{service.provider.user.username}}</strong></p>
                         <p class="card-text"><strong>${{service.price}} </strong></p>
+                        <div>
+                            <form method="POST" action="{% url 'delete_service' service.id %}">
+                                {% csrf_token %}
+                                <button class="button" type="submit" name="reject" style="background-color: red; margin-right: 10px;">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
