@@ -74,8 +74,14 @@ def status_update(request, booking_id):
 @login_required
 def detail(request, service_id):
     service = Service.objects.get(id = service_id)
+    bookings = Booking.objects.filter(service = service)
+    already_booked = False 
+    for booking in bookings:
+        if booking.user == request.user:
+            already_booked = True
     return render(request, "services/detail.html", {
-        "service": service
+        "service": service,
+        "already_booked": already_booked,
     })
 
 @login_required

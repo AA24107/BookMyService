@@ -17,10 +17,14 @@
             {% if service.provider.user.username == request.user.username %}
                 <button class="btn btn-primary button">Edit</button>
             {% else %}
-                <form method="POST", action="{% url 'book_service' service.id %}">
-                    {% csrf_token %}
-                    <button class="button" type="submit" >Book</button>
-                </form>
+                {% if already_booked %}
+                    <button class="button" disabled > Requested </button>
+                {% else %}
+                    <form method="POST", action="{% url 'book_service' service.id %}">
+                        {% csrf_token %}
+                        <button class="button" type="submit" >Book</button>
+                    </form>
+                {% endif %}
             {% endif %}
         </div>
     </div>
