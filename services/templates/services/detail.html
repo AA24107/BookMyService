@@ -1,6 +1,6 @@
  {% extends "services/layout.html" %}
 
-{% block title %}{{service.name}}{% endblock %}
+{% block title %}{{service.name}} By {{service.provider.user.username}}{% endblock %}
 {% block content %} 
     <hr>
     <div class= "card mb-3 detail-card">
@@ -15,7 +15,9 @@
         <div>
             <button class="btn btn-secondary button" onclick="window.history.back()">Back</button>
             {% if service.provider.user.username == request.user.username %}
-                <button class="btn btn-primary button">Edit</button>
+                <form method="GET", action="{% url 'edit_service' service.id %}">
+                    <button class="button" type="submit" >Edit</button>
+                </form>
             {% else %}
                 {% if already_booked %}
                     <button class="button" disabled > Requested </button>

@@ -66,6 +66,27 @@ def delete_service(request, service_id):
 
 
 @login_required
+def edit_service(request, service_id):
+    service = Service.objects.get(id=service_id)
+    if request.user == service.provider.user:
+        if request.method == "POST":
+            print(request.POST)
+            name = request.POST.get("name")
+            description = request.POST.get("description")
+            price = request.POST.get("price")
+            service.name = name
+            service.description = description
+            service.price = price
+            service.save()
+            return redirect("detail", service_id= service_id)
+        return render(request, "services/create_service.html", {
+            "service": service
+        })
+    else:
+        return redirect("dashboard", username=request.user.username)
+
+
+@login_required
 def status_update(request, booking_id):
     booking = Booking.objects.get(id=booking_id)
     

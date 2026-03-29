@@ -14,4 +14,5 @@ urlpatterns = [
     path("book/<int:service_id>", views.book_service, name="book_service"),
     path("status-update/<int:booking_id>", views.status_update, name="status_update"),
     path("delete/<int:service_id>", views.delete_service, name="delete_service"),
+    path("edit-service/<int:service_id>", views.edit_service, name="edit_service")
 ]
