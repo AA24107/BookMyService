@@ -8,28 +8,33 @@
         <hr>
         {% if not provider %}
         <div class="card-body">
-            <h3>Bookings</h3>
-            {% for booking in bookings %}
-            <div class= "card mb-3"">
-                <div>
-                    <h5 class="card-title">{{booking.name}}</h5>
-                    <hr>
-                    <h5 class="card-text">{{booking.service.name}}</h5>
-                    <p class="card-text">{{booking.service.description}}</p>
-                    <p class="card-text">Requested By: <strong>{{booking.user.username}}</strong></p>
-                    <p class="card-text">Provided By: <strong>{{booking.provider.user.username}}</strong></p>
-                    {% if booking.status == 'pending'%}
-                        <h4 style="color: yellowgreen;"><strong>Pending</strong></h4>
-                    {% elif booking.status == "accepted" %}
-                        <h4 style="color: green;"><strong>Accepted</strong></h4>
-                    {% elif booking.status == "rejected" %}
-                        <h4 style="color: red;"><strong>Rejected</strong></h4>
-                    {% else %}
-                        <h4 class="card-text"><strong>{{request.status}} </strong></h4>
-                    {% endif %}
+            {% if bookings %}
+                <h3>Bookings</h3>
+                {% for booking in bookings %}
+                <div class= "card mb-3"">
+                    <div>
+                        <h5 class="card-title">{{booking.name}}</h5>
+                        <hr>
+                        <h5 class="card-text">{{booking.service.name}}</h5>
+                        <p class="card-text">{{booking.service.description}}</p>
+                        <p class="card-text">Requested By: <strong>{{booking.user.username}}</strong></p>
+                        <p class="card-text">Provided By: <strong>{{booking.provider.user.username}}</strong></p>
+                        {% if booking.status == 'pending'%}
+                            <h4 style="color: yellowgreen;"><strong>Pending</strong></h4>
+                        {% elif booking.status == "accepted" %}
+                            <h4 style="color: green;"><strong>Accepted</strong></h4>
+                        {% elif booking.status == "rejected" %}
+                            <h4 style="color: red;"><strong>Rejected</strong></h4>
+                        {% else %}
+                            <h4 class="card-text"><strong>{{request.status}} </strong></h4>
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
-            {% endfor %}
+                {% endfor %}
+            {% else %}
+                <div>No Bookings Yet</div>
+                
+            {% endif %}
         </div>
         <br>
         <div class="card-body">
@@ -39,57 +44,65 @@
         </div>
         {% else %}
         <div class="card-body">
-            <h3>Requests</h3>
-            {% for booking in bookings %}
-            <div class= "card mb-3">
-                <h5 class="card-title">{{booking.name}}</h5>
-                <hr>
-                <h5 class="card-text">{{booking.service.name}}</h5>
-                <p class="card-text">{{booking.service.description}}</p>
-                <p class="card-text">Requested By: <strong>{{booking.user.username}}</strong></p>
-                <p class="card-text">Provided By: <strong>{{booking.provider.user.username}}</strong></p>
-                <div>
-                    {% if booking.status == 'pending' %}
-                    <form method="POST" action="{% url 'status_update' booking.id %}">
-                        {% csrf_token %}
-                        <button class="button" type="submit" name="accept" style="background-color: green; margin-right: 10px;">Accept</button>
-                        <button class="button" type="submit" name="reject" style="background-color: red; margin-right: 10px;">Reject</button>
-                    </form>
-                    {% elif booking.status == "accepted" %}
-                        <h4 style="color: green;"><strong>Accepted</strong></h4>
-                    {% elif booking.status == "rejected" %}
-                        <h4 style="color: red;"><strong>Rejected</strong></h4>
-                    {% else %}
-                        <h4 class="card-text"><strong>{{request.status}} </strong></h4>
-                    {% endif %}
+            <h3>Requests</h3>            
+            {% if bookings %}
+                {% for booking in bookings %}
+                <div class= "card mb-3">
+                    <h5 class="card-title">{{booking.name}}</h5>
+                    <hr>
+                    <h5 class="card-text">{{booking.service.name}}</h5>
+                    <p class="card-text">{{booking.service.description}}</p>
+                    <p class="card-text">Requested By: <strong>{{booking.user.username}}</strong></p>
+                    <p class="card-text">Provided By: <strong>{{booking.provider.user.username}}</strong></p>
+                    <div>
+                        {% if booking.status == 'pending' %}
+                        <form method="POST" action="{% url 'status_update' booking.id %}">
+                            {% csrf_token %}
+                            <button class="button" type="submit" name="accept" style="background-color: green; margin-right: 10px;">Accept</button>
+                            <button class="button" type="submit" name="reject" style="background-color: red; margin-right: 10px;">Reject</button>
+                        </form>
+                        {% elif booking.status == "accepted" %}
+                            <h4 style="color: green;"><strong>Accepted</strong></h4>
+                        {% elif booking.status == "rejected" %}
+                            <h4 style="color: red;"><strong>Rejected</strong></h4>
+                        {% else %}
+                            <h4 class="card-text"><strong>{{request.status}} </strong></h4>
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
-            {% endfor %}
+                {% endfor %}
+            {% else %}
+                <div>No Requests Yet</div>
+            {% endif %}
         </div>
         <br>
         <div class="card-body">
             <h3>Services</h3>
-            {% for service in services %}
-            <div>
-                <div class= "card service-card mb-3" data-id="{{service.id}}">
-                    <div>
-                        <h5 class="card-title">{{service.name}}</h5>
-                        <hr>
-                        <p class="card-text">{{service.description}}</p>
-                        <p class="card-text">Provided By: <strong>{{service.provider.user.username}}</strong></p>
-                        <p class="card-text"><strong>${{service.price}} </strong></p>
+            {% if services %}
+                {% for service in services %}
+                <div>
+                    <div class= "card service-card mb-3" data-id="{{service.id}}">
                         <div>
-                            <form method="POST" action="{% url 'delete_service' service.id %}">
-                                {% csrf_token %}
-                                <button class="button" type="submit" name="reject" style="background-color: red; margin-right: 10px;">
-                                    Delete
-                                </button>
-                            </form>
+                            <h5 class="card-title">{{service.name}}</h5>
+                            <hr>
+                            <p class="card-text">{{service.description}}</p>
+                            <p class="card-text">Provided By: <strong>{{service.provider.user.username}}</strong></p>
+                            <p class="card-text"><strong>${{service.price}} </strong></p>
+                            <div>
+                                <form method="POST" action="{% url 'delete_service' service.id %}">
+                                    {% csrf_token %}
+                                    <button class="button" type="submit" name="reject" style="background-color: red; margin-right: 10px;">
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            {% endfor %}
+                {% endfor %}
+            {% else %}
+                <div>You haven’t created any services yet. Start by adding one!</div>
+            {% endif %}
         </div>
         <br>
         <div class="card-body">

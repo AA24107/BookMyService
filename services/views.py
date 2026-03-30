@@ -48,8 +48,8 @@ def book_service(request, service_id):
         service = service,
     )
     booking.save()
-
-    return redirect("dashboard", username= request.user.username)
+    messages.error(request, "booked successfully")
+    return redirect("detail", service_id=service_id)
 
 
 @login_required
@@ -100,23 +100,28 @@ def status_update(request, booking_id):
             booking.save()
         elif 'reject' in request.POST:
             booking.status = "rejected"
-            booking.save()    
+            booking.save()
     
     return redirect("dashboard", username= request.user.username)
 
 
-@login_required
 def detail(request, service_id):
-    service = Service.objects.get(id = service_id)
-    bookings = Booking.objects.filter(service = service)
-    already_booked = False 
-    for booking in bookings:
-        if booking.user == request.user:
-            already_booked = True
-    return render(request, "services/detail.html", {
-        "service": service,
-        "already_booked": already_booked,
-    })
+    if request.user.is_authenticated:
+        service = Service.objects.get(id = service_id)
+        bookings = Booking.objects.filter(service = service)
+        provider = ProviderProfile.objects.filter(user=request.user).first()
+        already_booked = False 
+        print(provider)
+        for booking in bookings:
+            if booking.user == request.user:
+                already_booked = True
+        return render(request, "services/detail.html", {
+            "service": service,
+            "already_booked": already_booked,
+            "provider": provider,
+        })
+    messages.error(request, "You are not logged in")
+    return HttpResponseRedirect(reverse("index"))
 
 @login_required
 def become_provider(request):
@@ -154,7 +159,7 @@ def create_service(request):
         service = Service.objects.create(name = name, description = description, price = price, provider = provider)
         service.save()
         messages.success(request, "Service created successfully")
-        return HttpResponseRedirect(reverse("index"))
+        return redirect("dashboard", username= request.user.username)
     return render(request, "services/create_service.html")
 
 
@@ -194,12 +199,12 @@ def login_view(request):
         if user is not None:
             login(request, user)
         else:
-            return render(request, "services/login.html", {
-                "message":"user does not exist"
-            })
+            messages.error(request, "User doesn't exist")
+            return render(request, "services/login.html")
         return HttpResponseRedirect(reverse("index"))
     
     return render(request, "services/login.html")
+
 
 def logout_view(request):
     logout(request)

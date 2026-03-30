@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <meta charset="UTF-8"/>
+        <meta name = "viewport content" width='device-width', initial="scale=1.0" />
         <title>{% block title %}Social Network{% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link href="{% static 'services/styles.css' %}" rel="stylesheet">
@@ -37,12 +39,14 @@
             {% if messages %}
             <hr>
                 {% for message in messages %}
-                <div class="container-flex alert alert-info">
+                <div class="container-flex alert">
                     {{message}}
                 </div>
                 {% endfor %}
             {% endif %}
-            {% block content %} {% endblock %}
+            <div class="container-fluid mb-3">
+                {% block content %} {% endblock %}
+            </div>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous" defer></script>
