@@ -13,17 +13,21 @@
 
         </div>
         <div style="display: flex;">
-            <button class="btn btn-secondary button" onclick="window.history.back()">Back</button>
+            <button class="btn btn-secondary button" onclick="window.location.href=`{% url 'index' %}`">Back</button>
             {% if service.provider.user.username == request.user.username %}
+                <!--Button to edit services-->
                 <form method="GET", action="{% url 'edit_service' service.id %}">
                     <button class="button" type="submit" >Edit</button>
                 </form>
             {% elif provider %}
+                <!--Disabled button for other service provider-->
                 <button class="button" disabled > Not available </button>
             {% else %}
                 {% if already_booked %}
+                    <!--Disabled button for users who've already requested services-->
                     <button class="button" disabled > Requested </button>
                 {% else %}
+                    <!--Button to book services-->
                     <form method="POST", action="{% url 'book_service' service.id %}">
                         {% csrf_token %}
                         <button class="button" type="submit" >Book Now</button>

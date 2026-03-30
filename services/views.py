@@ -70,7 +70,6 @@ def edit_service(request, service_id):
     service = Service.objects.get(id=service_id)
     if request.user == service.provider.user:
         if request.method == "POST":
-            print(request.POST)
             name = request.POST.get("name")
             description = request.POST.get("description")
             price = request.POST.get("price")
@@ -111,7 +110,6 @@ def detail(request, service_id):
         bookings = Booking.objects.filter(service = service)
         provider = ProviderProfile.objects.filter(user=request.user).first()
         already_booked = False 
-        print(provider)
         for booking in bookings:
             if booking.user == request.user:
                 already_booked = True

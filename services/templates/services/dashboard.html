@@ -8,6 +8,7 @@
         <hr>
         {% if not provider %}
         <div class="card-body">
+            <!--Services booked by user-->
             {% if bookings %}
                 <h3>Bookings</h3>
                 {% for booking in bookings %}
@@ -19,6 +20,7 @@
                         <p class="card-text">{{booking.service.description}}</p>
                         <p class="card-text">Requested By: <strong>{{booking.user.username}}</strong></p>
                         <p class="card-text">Provided By: <strong>{{booking.provider.user.username}}</strong></p>
+                        <!--Status of booking-->
                         {% if booking.status == 'pending'%}
                             <h4 style="color: yellowgreen;"><strong>Pending</strong></h4>
                         {% elif booking.status == "accepted" %}
@@ -38,13 +40,15 @@
         </div>
         <br>
         <div class="card-body">
+            <!--Button to become a service provider-->
             <button class="button" onclick="window.location.href=`{% url 'become_provider' %}`">
                 Become a Service Provider
             </button>
         </div>
         {% else %}
         <div class="card-body">
-            <h3>Requests</h3>            
+            <h3>Requests</h3>  
+            <!--Requests for services provided by user-->          
             {% if bookings %}
                 {% for booking in bookings %}
                 <div class= "card mb-3">
@@ -78,6 +82,7 @@
         <br>
         <div class="card-body">
             <h3>Services</h3>
+            <!--Services provided by user-->
             {% if services %}
                 {% for service in services %}
                 <div>
@@ -89,6 +94,7 @@
                             <p class="card-text">Provided By: <strong>{{service.provider.user.username}}</strong></p>
                             <p class="card-text"><strong>${{service.price}} </strong></p>
                             <div>
+                                <!--Button to delete services-->
                                 <form method="POST" action="{% url 'delete_service' service.id %}">
                                     {% csrf_token %}
                                     <button class="button" type="submit" name="reject" style="background-color: red; margin-right: 10px;">
@@ -106,6 +112,7 @@
         </div>
         <br>
         <div class="card-body">
+            <!--Button to create services-->
             <button class="button" onclick="window.location.href=`{% url 'create_service' %}`">
                 Create a service
             </button>
