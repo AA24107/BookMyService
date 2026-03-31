@@ -5,7 +5,6 @@
     <hr>
     <div class="card mb-3 dashboard">
         <h1 class="card-title">@{{user.username}}'s Dashboard</h1>
-        <h4 >|    {{provider.description}}</h4>
         <hr>
         {% if not provider %}
         <div class="card-body">
@@ -47,6 +46,8 @@
             </button>
         </div>
         {% else %}
+        <h4 >|    {{provider.description}}</h4>
+        <hr>
         <div class="card-body">
             <h3>Requests</h3>  
             <!--Requests for services provided by user-->          
