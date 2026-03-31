@@ -7,14 +7,20 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
 from .models import User, Service, ProviderProfile, Booking
 
+
 # Create your views here.
 
 
 def index(request):
-    services = Service.objects.all()
-    return render(request, "services/index.html", {
-        "services": services
-    })
+    try:
+        services = Service.objects.all()
+        return render(request, "services/index.html", {
+            "services": services
+        })
+    except:
+        messages.error(request, "No services available")
+        return render(request, "services/index.html")
+
 
 @login_required
 def dashboard(request, username):
@@ -105,21 +111,25 @@ def status_update(request, booking_id):
 
 
 def detail(request, service_id):
-    if request.user.is_authenticated:
-        service = Service.objects.get(id = service_id)
-        bookings = Booking.objects.filter(service = service)
-        provider = ProviderProfile.objects.filter(user=request.user).first()
-        already_booked = False 
-        for booking in bookings:
-            if booking.user == request.user:
-                already_booked = True
-        return render(request, "services/detail.html", {
-            "service": service,
-            "already_booked": already_booked,
-            "provider": provider,
-        })
-    messages.error(request, "You are not logged in")
-    return HttpResponseRedirect(reverse("index"))
+    try:
+        if request.user.is_authenticated:
+            service = Service.objects.get(id = service_id)
+            bookings = Booking.objects.filter(service = service)
+            provider = ProviderProfile.objects.filter(user=request.user).first()
+            already_booked = False 
+            for booking in bookings:
+                if booking.user == request.user:
+                    already_booked = True
+            return render(request, "services/detail.html", {
+                "service": service,
+                "already_booked": already_booked,
+                "provider": provider,
+            })
+        messages.error(request, "You are not logged in")
+        return HttpResponseRedirect(reverse("index"))
+    except Service.DoesNotExist:
+        messages.error(request, "Service doesn't exist")
+        return HttpResponseRedirect(reverse("index"))
 
 @login_required
 def become_provider(request):
@@ -127,13 +137,14 @@ def become_provider(request):
         description = request.POST.get("description")
 
         if ProviderProfile.objects.filter(user = request.user).exists():
-            return render(request, "services/become_provider.html", {
-                "message": "Provider profile already exists"
-            })
+            messages.success(request, "You are already a provider")        
+            return render(request, "services/become_provider.html")
+        
         provider = ProviderProfile.objects.create(user = request.user, description = description)
         provider.save()
         messages.success(request, "You are a provider now !!")
         return HttpResponseRedirect(reverse("index"))
+    
     user = User.objects.get(username = request.user.username)
     return render(request, "services/become_provider.html", {
         "user": user
