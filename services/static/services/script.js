@@ -1,12 +1,12 @@
 const searchInput = document.getElementById("search-bar");
 const cards = document.querySelectorAll(".service-card");
 const cardContainer = document.getElementById("service-container")
+const noServices = document.getElementById("no-services");
 
 if (searchInput) {
     searchInput.addEventListener("input", searchCards);
 }
 
-console.log("Js working");
 
 cards.forEach(card => {
     const id = card.dataset.id;
@@ -20,10 +20,10 @@ cards.forEach(card => {
 function searchCards () {
     const searchTerm = searchInput.value.toLowerCase();
     const words = searchTerm.split(" ");
+    let cardCount = 0;
 
     cards.forEach(card => {
         const cardText = card.textContent.toLowerCase();
-        let cardCount = 0;
         let show = true;
 
         words.forEach(word => {
@@ -37,14 +37,13 @@ function searchCards () {
         if (show) {
             cardCount++;
         }
-
-        if (cardCount === 0) {
-            cardContainer.innerHTML = `
-            <div>
-                <h3>No Services Found</h3>
-            </div>`
-        }
-
     })
+    if (cardCount === 0) {
+        noServices.style.display = 'block';
+        cardContainer.style.display = 'none';
+    } else {
+        noServices.style.display = 'none';
+        cardContainer.style.display = 'block';
+    }
 
 }

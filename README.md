@@ -3,6 +3,8 @@
 A web application built using Django and JavaScript that allows users to browse and book local services, 
 while service providers can create and manage their offerings.
 
+This web application serves as an interface for small service providers to interact with users who need services. 
+
 This project was developed as part of the CS50W Capstone and demonstrates full-stack web development 
 including user authentication, dynamic UI updates, and role-based functionality.
 
@@ -15,7 +17,7 @@ role-based functionality and dynamic user interaction.
 - User authentication (login, logout, register)
 - Service creation and management by providers
 - Booking system for users
-- User-friendly interface
+- Clean and intuitive interface
 - Role-based interface (different views for users and providers)
 - Status tracking for bookings
 - Dashboard for providers to manage services and track bookings
@@ -64,7 +66,7 @@ assignments by combining role-based access, dynamic UI behavior, and a structure
 - `views.py` - Handles application logic and request routing
 - `urls.py` - Defines URL routes
 - `templates/` - Contains HTML templates
-- `static/` - Contains CSS and JavaScript files
+- `static/` - Contains CSS and JavaScript files for front-end interactivity
 
 
 ## How to Run
