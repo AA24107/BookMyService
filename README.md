@@ -60,6 +60,19 @@ Overall, this project demonstrates a full-stack implementation that goes beyond 
 assignments by combining role-based access, dynamic UI behavior, and a structured booking workflow.
 
 
+## Motivation
+
+This project was inspired by a real-world problem I observed in India — 
+finding reliable local service providers (such as maids or small service workers) 
+is often difficult, despite them offering more affordable options than larger companies.
+
+After initially exploring this idea during a hackathon project, I found the concept 
+interesting and decided to develop it further as my final project.
+
+BookMyService aims to bridge this gap by providing a simple platform where users 
+can discover and connect with local service providers more easily.
+
+
 ## Files and Structure
 
 - `models.py` - Defines database models (User, Service, Booking)
