@@ -96,3 +96,18 @@ python manage.py runserver
 4. Open the app in your browser
 
 
+## Future Improvements
+
+- Prevent deletion of services with active bookings more robustly  
+- Add watchlist functionality for users  
+- Re-enable booking if a request is rejected  
+- Automatically clean up outdated booking requests  
+- Improve UI/UX design and add notifications  
+- Ratings and Review Section
+- Chat for negotiation of price and timings [Only after booking is accepted]
+
+
+## Demo
+
+[![Watch the demo](https://img.youtube.com/vi/A3saIEOI6hE/0.jpg)](https://youtu.be/A3saIEOI6hE)
+
