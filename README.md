@@ -5,7 +5,7 @@ while service providers can create and manage their offerings.
 
 This web application serves as an interface for small service providers to interact with users who need services. 
 
-This project was developed as part of the CS50W Capstone and demonstrates full-stack web development 
+Originally developed as part of the CS50W Capstone, this project demonstrates full-stack web development 
 including user authentication, dynamic UI updates, and role-based functionality.
 
 This is my first full-stack project, and it focuses on building a complete booking workflow with 
@@ -104,7 +104,7 @@ python manage.py runserver
 - Automatically clean up outdated booking requests  
 - Improve UI/UX design and add notifications  
 - Ratings and Review Section
-- Chat for negotiation of price and timings [Only after booking is accepted]
+- Chat system for negotiation of price and timing (after booking acceptance)
 
 
 ## Demo
