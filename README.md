@@ -1,113 +1,173 @@
 # BookMyService
 
-A web application built using Django and JavaScript that allows users to browse and book local services, 
-while service providers can create and manage their offerings.
+**A full-stack service booking platform built with Django, JavaScript, and PostgreSQL.**
 
-This web application serves as an interface for small service providers to interact with users who need services. 
+BookMyService is a web application that connects users with local service providers. Users can browse available services and submit booking requests, while service providers can create, manage, and respond to requests through their dashboards.
 
-Originally developed as part of the CS50W Capstone, this project demonstrates full-stack web development 
-including user authentication, dynamic UI updates, and role-based functionality.
+Originally developed as my CS50W Capstone project, BookMyService has since been deployed as a live web application. The project demonstrates full-stack development, database management, user authentication, role-based functionality, and production deployment.
 
-This is my first full-stack project, and it focuses on building a complete booking workflow with 
-role-based functionality and dynamic user interaction.
+## Live Demo
 
-
-## Features
-
-- User authentication (login, logout, register)
-- Service creation and management by providers
-- Booking system for users
-- Clean and intuitive interface
-- Role-based interface (different views for users and providers)
-- Status tracking for bookings
-- Dashboard for providers to manage services and track bookings
-- Flash messages and empty states for better UX
-- Responsive design for mobile and desktop
-
-
-## Distinctiveness and Complexity
-
-This project is distinct from other CS50W projects in several ways. Unlike the social network project, 
-this application is focused on a service booking system with clear role separation between providers and 
-users. Providers can create, edit, and manage services, while users can browse and request bookings. This 
-role-based functionality introduces different interfaces and behaviors depending on the logged-in user, 
-which was not present in earlier projects.
-
-Additionally, this project is not a traditional e-commerce platform. Instead of handling products, carts,
-and payments, the application focuses on service interactions and booking requests. The logic behind 
-booking, tracking request status, and restricting actions based on user roles adds a different layer of 
-complexity compared to standard e-commerce flows.
-
-In terms of complexity, the application includes multiple interconnected models, including users, 
-services, and booking requests. The relationships between these models required careful design to ensure 
-data integrity and correct behavior across the application.
-
-The project also implements dynamic user interfaces that change based on context. For example, users see 
-booking options, providers see editing controls, and certain actions are disabled or modified depending 
-on the current state (such as already requested services). This required conditional rendering both in 
-Django templates and backend logic.
-
-Additional complexity comes from handling edge cases, such as preventing providers from booking services, 
-managing request states, and ensuring proper feedback through flash messages and empty states. These 
-features improve usability while increasing the overall sophistication of the application.
-
-This project also integrates multiple concepts introduced throughout the course, including search 
-functionality, dynamic card-based layouts, status updates, interactive interfaces, Django templating, CSS 
-styling, and JavaScript event handling. These components are combined into a single cohesive application 
-rather than being implemented in isolation, increasing both the scope and integration complexity.
-
-Overall, this project demonstrates a full-stack implementation that goes beyond the scope of previous 
-assignments by combining role-based access, dynamic UI behavior, and a structured booking workflow.
-
-
-## Motivation
-
-This project was inspired by a real-world problem I observed in India — 
-finding reliable local service providers (such as maids or small service workers) 
-is often difficult, despite them offering more affordable options than larger companies.
-
-After initially exploring this idea during a hackathon project, I found the concept 
-interesting and decided to develop it further as my final project.
-
-BookMyService aims to bridge this gap by providing a simple platform where users 
-can discover and connect with local service providers more easily.
-
-
-## Files and Structure
-
-- `models.py` - Defines database models (User, Service, Booking)
-- `views.py` - Handles application logic and request routing
-- `urls.py` - Defines URL routes
-- `templates/` - Contains HTML templates
-- `static/` - Contains CSS and JavaScript files for front-end interactivity
-
-
-## How to Run
-
-1. Clone the repository
-2. Run migrations:
-```bash
-python manage.py migrate
-```
-3. Start the server:
-```bash
-python manage.py runserver
-```
-4. Open the app in your browser
-
-
-## Future Improvements
-
-- Prevent deletion of services with active bookings more robustly  
-- Add watchlist functionality for users  
-- Re-enable booking if a request is rejected  
-- Automatically clean up outdated booking requests  
-- Improve UI/UX design and add notifications  
-- Ratings and Review Section
-- Chat system for negotiation of price and timing (after booking acceptance)
-
+**Live Application:** https://bookmyservice-zhir.onrender.com/
 
 ## Demo
 
-[![Watch the demo](https://img.youtube.com/vi/A3saIEOI6hE/0.jpg)](https://youtu.be/A3saIEOI6hE)
+[![Watch the BookMyService demonstration](https://img.youtube.com/vi/A3saIEOI6hE/0.jpg)](https://youtu.be/A3saIEOI6hE)
 
+
+## Tech Stack
+
+- **Backend:** Python, Django
+- **Frontend:** HTML, CSS, Bootstrap, JavaScript
+- **Database:** PostgreSQL (Neon)
+- **Local Development Database:** SQLite
+- **Deployment:** Render
+- **Version Control:** Git and GitHub
+
+## Features
+
+### User Authentication
+- User registration, login, and logout.
+- Secure password handling through Django authentication.
+- Separate user and service provider functionality.
+
+### Service Management
+- Providers can create and manage their service listings.
+- Each service includes a name, description, and price.
+- Users can browse available services.
+
+### Booking System
+- Users can submit booking requests for services.
+- Booking requests are associated with the customer, provider, and selected service.
+- Providers can accept or reject incoming requests.
+- Booking statuses are tracked as Pending, Accepted, or Rejected.
+
+### Dashboards and User Interface
+- Separate dashboards for customers and service providers.
+- Providers can manage their services and booking requests.
+- Dynamic interface elements based on user roles and booking status.
+- Flash messages and empty states for user feedback.
+- Responsive layouts for desktop and mobile devices.
+
+## Distinctiveness and Complexity
+
+BookMyService differs from traditional e-commerce applications and other CS50W projects by focusing on service discovery and booking rather than products, shopping carts, and payments.
+
+The application implements role-based functionality, allowing customers and service providers to interact with the platform differently. Customers can browse services and submit booking requests, while providers can create service listings and manage incoming requests.
+
+The application uses multiple interconnected database models, including:
+
+- **User:** Handles authentication and account information.
+- **ProviderProfile:** Stores additional information about service providers.
+- **Service:** Represents services offered by providers.
+- **Booking:** Connects customers, providers, and services while tracking request status.
+
+These relationships require careful handling of database operations and application logic to maintain consistency.
+
+Additional complexity comes from handling different application states and edge cases, including preventing providers from booking their own services, managing booking statuses, and dynamically changing interface elements based on user roles and previous interactions.
+
+The project also combines Django views and templates, JavaScript event handling, search functionality, responsive layouts, and conditional rendering into a single application.
+
+Beyond the original development, I also deployed the application using Render and migrated its production PostgreSQL database to Neon. This involved configuring environment variables, managing database connections, creating database backups, and verifying the application after migration.
+
+## Motivation
+
+This project was inspired by a real-world problem I observed in India: finding reliable local service providers, such as domestic workers and independent service professionals, can be difficult despite the availability of affordable options.
+
+After initially exploring this idea during a hackathon project, I decided to develop it further as my CS50W final project.
+
+BookMyService aims to bridge this gap by providing a simple platform where users can discover and connect with local service providers more easily.
+
+## Deployment and Database
+
+BookMyService is deployed on Render, with Neon providing the production PostgreSQL database.
+
+The deployment process involved:
+
+- Configuring Django for production.
+- Managing sensitive configuration through environment variables.
+- Setting up Gunicorn as the application server.
+- Configuring WhiteNoise for static file serving.
+- Connecting Django to PostgreSQL using `DATABASE_URL`.
+- Migrating the existing database and verifying application functionality.
+
+The application uses SQLite as a fallback for local development and PostgreSQL in production.
+
+## Project Structure
+
+```text
+BookMyService/
+│
+├── final/
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+│
+├── services/
+│   ├── models.py
+│   ├── views.py
+│   ├── urls.py
+│   └── ...
+│
+├── templates/
+├── static/
+├── manage.py
+├── requirements.txt
+├── build.sh
+└── README.md
+```
+
+## How to Run Locally
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/AA24107/BookMyService.git
+cd BookMyService
+```
+
+### 2. Create and activate a virtual environment
+
+```bash
+python -m venv venv
+```
+
+Windows:
+
+```bash
+venv\Scripts\activate
+```
+
+### 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Apply database migrations
+
+```bash
+python manage.py migrate
+```
+
+### 5. Start the development server
+
+```bash
+python manage.py runserver
+```
+
+Open http://127.0.0.1:8000/ in your browser.
+
+## Future Improvements
+
+- Prevent deletion of services with active bookings more robustly.
+- Add watchlist functionality for users.
+- Allow customers to book a service again if a previous request is rejected.
+- Automatically clean up outdated booking requests.
+- Improve UI/UX and introduce notifications.
+- Implement a ratings and reviews system.
+- Add a chat system for negotiating prices and scheduling after booking acceptance.
+
+---
+
+**Developed as my CS50W Capstone project.**
